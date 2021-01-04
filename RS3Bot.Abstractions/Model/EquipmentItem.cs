@@ -10,5 +10,6 @@ namespace RS3Bot.Abstractions.Model
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
         public Item Item { get; set; }
+        public string EquipmentType { get; set; }
     }
 }

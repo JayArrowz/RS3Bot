@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RS3Bot.Abstractions.Model
 {
@@ -13,5 +14,8 @@ namespace RS3Bot.Abstractions.Model
         public SkillSet SkillSet { get; set; }
         public virtual ICollection<UserItem> Items { get; set; }
         public virtual ICollection<EquipmentItem> Equipment { get; set; }
+
+        [NotMapped]
+        public Inventory Bank { get; set; }
     }
 }

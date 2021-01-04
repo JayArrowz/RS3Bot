@@ -9,21 +9,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RS3Bot.Abstractions.Extensions;
+using RS3Bot.Abstractions.Model;
 
 namespace RS3Bot.Cli.Commands
 {
-    public class DiceCommand : BaseCommand<DiceOption>
+    public class DiceCommand : UserAwareCommand<DiceOption>
     {
+        public DiceCommand(IContextFactory contextFactory) : base(contextFactory) { }
 
-        private IContextFactory _contextFactory;
-        public DiceCommand(IContextFactory contextFactory)
+        protected override async Task<bool> ExecuteCommand(IDiscordBot bot, SocketMessage message, Abstractions.Model.ApplicationUser user, ApplicationDbContext context, DiceOption option)
         {
-            _contextFactory = contextFactory;
-        }
-
-        protected override async Task<bool> ExecuteCommand(IDiscordBot bot, SocketMessage message, DiceOption option)
-        {
-            var userId = message.Author.Id.ToString();
             ulong coinAmount = 0L;
             var amountArgs = option.Amount;
             var funDice = string.IsNullOrEmpty(amountArgs);
@@ -37,43 +32,34 @@ namespace RS3Bot.Cli.Commands
 
             if (!funDice)
             {
-                using (var context = _contextFactory.Create())
+                var coinItem = user.Bank.GetAmount(995);
+
+                var amountNumber = StackFormatter.StackSizeToQuantity(option.Amount);
+                if (amountNumber <= 0)
                 {
-                    var coinItem = context.UserItems.AsQueryable().FirstOrDefault(t => t.UserId == userId && t.Item.ItemId == 995);
-                    coinAmount += (coinItem?.Item?.Amount ?? 0);
-
-                    var amountNumber = StackFormatter.StackSizeToQuantity(option.Amount);
-                    if(amountNumber <= 0)
-                    {
-                        return false;
-                    }
-
-                    if (coinAmount < (ulong)amountNumber)
-                    {
-                        await message.Channel.SendMessageAsync($"{message.Author} does not have {amountArgs} coins to gamble.");
-                        return false;
-                    }
-
-                    if(win)
-                    {
-                        coinAmount += (ulong) amountNumber;
-                    } else
-                    {
-                        coinAmount -= (ulong)amountNumber;
-                    }
-
-                    if(coinAmount == 0)
-                    {
-                        context.Remove(coinItem);
-                    } else
-                    {
-                        coinItem.Item.Amount = coinAmount;
-                        context.Update(coinItem);
-                    }
-                    await context.SaveChangesAsync();
-                    diceResult.Append($" {StackFormatter.QuantityToRSStackSize(amountNumber)} GP");
+                    return false;
                 }
+
+                if (coinItem < (ulong)amountNumber)
+                {
+                    await message.Channel.SendMessageAsync($"{message.Author} does not have {amountArgs} coins to gamble.");
+                    return false;
+                }
+
+                if (win)
+                {
+                    user.Bank.Add(new Item(995, amountNumber));
+                }
+                else
+                {
+                    user.Bank.Remove(new Item(995, amountNumber));
+                }
+
+                await context.SaveChangesAsync();
+                diceResult.Append($" {StackFormatter.QuantityToRSStackSize((long) amountNumber)} GP");
+
             }
+            user.Bank.Update();
             diceResult.Append(".");
 
 

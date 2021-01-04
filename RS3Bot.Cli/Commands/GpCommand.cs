@@ -1,36 +1,22 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using Microsoft.EntityFrameworkCore;
+using RS3Bot.Abstractions.Interfaces;
 using RS3Bot.Cli.Options;
 using RS3Bot.DAL;
-using RS3Bot.Abstractions.Interfaces;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RS3Bot.Cli.Commands
 {
-    public class GpCommand : BaseCommand<GpOption>
+    public class GpCommand : UserAwareCommand<GpOption>
     {
-        private readonly IContextFactory _contextFactory;
+        public GpCommand(IContextFactory contextFactory) : base(contextFactory) { }
 
-        public GpCommand(IContextFactory contextFactory)
+        protected override async Task<bool> ExecuteCommand(IDiscordBot bot, SocketMessage message, Abstractions.Model.ApplicationUser user, ApplicationDbContext context, GpOption option)
         {
-            _contextFactory = contextFactory;
-        }
-        protected override async Task<bool> ExecuteCommand(IDiscordBot bot, SocketMessage message, GpOption option)
-        {
-            var userId = message.Author.Id.ToString();
-            ulong amount = 0L;
-            using (var context = _contextFactory.Create())
-            {
-                var coins = await context.UserItems
-                    .AsQueryable()
-                    .FirstOrDefaultAsync(t => t.UserId == userId && t.Item.ItemId == 995);
-                amount += (coins?.Item?.Amount ?? 0);
-            }
+            var coins = user.Bank.GetAmount(995);
 
             var eb = new EmbedBuilder { Title = "GP Count" };
-            eb.WithDescription($"@{message.Author} has {amount} gp.");
+            eb.WithDescription($"@{message.Author} has {coins} gp.");
             eb.WithThumbnailUrl("https://runescape.wiki/images/6/63/Coins_detail.png");
             eb.WithColor(Color.Gold);
 

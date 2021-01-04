@@ -69,7 +69,7 @@ namespace RS3Bot.Abstractions.Extensions
             }
         }
 
-        public static Color GetColor(long quantity)
+        public static Color GetColor(ulong quantity)
         {
             if (quantity >= 100_000_00)
             {
@@ -83,11 +83,11 @@ namespace RS3Bot.Abstractions.Extensions
             }
         }
 
-        public static long StackSizeToQuantity(string str)
+        public static ulong StackSizeToQuantity(string str)
         {
             int multiplier = GetMultiplier(str, out var prefix);
-            long parsedValue = long.Parse(prefix);
-            return parsedValue * multiplier;
+            ulong parsedValue = ulong.Parse(prefix);
+            return parsedValue * (ulong) multiplier;
         }
 
 

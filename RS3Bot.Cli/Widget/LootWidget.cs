@@ -68,7 +68,7 @@ namespace RS3Bot.Cli.Widget
 
                         using (var itemStream = await _imageGrabber.GetAsync(item.Item.ItemId))
                         using (var imageStream = Image.FromStream(itemStream))
-                        using (SolidBrush drawBrush = new SolidBrush(StackFormatter.GetColor((long)item.Item.Amount)))
+                        using (SolidBrush drawBrush = new SolidBrush(StackFormatter.GetColor(item.Item.Amount)))
                         {
                             var horizontalCenter = itemY + ((32 - imageStream.Height) / 2);
                             var verticalCenter = itemX + ((32 - imageStream.Width) / 2);

@@ -15,7 +15,6 @@ namespace RS3Bot.Cli
         where TOption : IOptionsBase
     {
         public string CommandName { get; }
-        protected IOptionsBase Options { get; set; }
         public Type OptionType => typeof(TOption);
         protected BaseCommand()
         {
@@ -26,8 +25,8 @@ namespace RS3Bot.Cli
 
         protected virtual Task<bool> ExecuteCommandInner(IDiscordBot bot, SocketMessage message, IOptionsBase optionsBase)
         {
-            Options = optionsBase;
-            return ExecuteCommand(bot, message, (TOption)Options);
+            var options = optionsBase;
+            return ExecuteCommand(bot, message, (TOption)options);
         }
 
         public async Task<bool> Parse(IDiscordBot bot, SocketMessage message, string[] args)

@@ -59,7 +59,7 @@ namespace RS3Bot.Cli.Widget
                             {
                                 using (var imageStream = Image.FromStream(rawStream))
                                 {
-                                    using (SolidBrush drawBrush = new SolidBrush(StackFormatter.GetColor((long)item.Item.Amount)))
+                                    using (SolidBrush drawBrush = new SolidBrush(StackFormatter.GetColor(item.Item.Amount)))
                                     {
                                         var row = (int)Math.Floor(amountCount / (double)maxItemsPerRow);
                                         var itemX = 18 + ((amountCount % maxItemsPerRow) * 45);

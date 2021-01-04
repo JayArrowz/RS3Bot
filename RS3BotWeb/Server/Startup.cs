@@ -23,6 +23,7 @@ using RS3Bot.Abstractions.Interfaces;
 using static RS3Bot.Cli.Widget.BankWidget;
 using RS3Bot.Cli.Widget;
 using static RS3Bot.Cli.Widget.LootWidget;
+using static RS3Bot.Cli.Widget.EquipmentWidget;
 
 namespace RS3BotWeb.Server
 {
@@ -65,12 +66,13 @@ namespace RS3BotWeb.Server
             services.AddSingleton<IItemImageGrabber, ItemImageGrabber>();
             services.AddSingleton<IWidget<BankWidgetOptions>, BankWidget>();
             services.AddSingleton<IWidget<LootWidgetOptions>, LootWidget>();
-            services.AddScoped<ICommand, ExampleCommand>();
+            services.AddSingleton<IWidget<EquipmentWidgetOptions>, EquipmentWidget>();
             services.AddScoped<ICommand, RegisterCommand>();
             services.AddScoped<ICommand, DiceCommand>();
             services.AddScoped<ICommand, StatsCommand>();
             services.AddScoped<ICommand, GpCommand>();
             services.AddScoped<ICommand, BankCommand>();
+            services.AddScoped<ICommand, GearCommand>();
             AddRsFonts(services);
 
             services.AddControllersWithViews();

@@ -17,6 +17,7 @@
     <None Remove="Images\Bank_Bottom.png" />
     <None Remove="Images\Bank_Extra.png" />
     <None Remove="Images\Bank_Interface.png" />
+    <None Remove="Images\Equipment.png" />
     <None Remove="Images\Loot_Footer.png" />
     <None Remove="Images\Loot_Head.png" />
     <None Remove="Images\Loot_Row.png" />
@@ -36,6 +37,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Images\Bank_Interface.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\Equipment.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Images\Loot_Footer.png">
