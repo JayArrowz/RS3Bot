@@ -13,6 +13,7 @@ namespace RS3Bot.Cli
         where TOption : IOptionsBase
     {
         private readonly IContextFactory _contextFactory;
+        protected bool SaveChanges { get; set; }
         protected UserAwareCommand(IContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
@@ -29,15 +30,17 @@ namespace RS3Bot.Cli
                 var user = await context.Users.AsQueryable()
                     .Include(t => t.Items)
                     .Include(t => t.Equipment)
+                    .Include(t => t.CurrentTask)
                     .FirstOrDefaultAsync(t => t.Id == userId);
-                user.Bank = new Inventory(600, Inventory.StackMode.STACK_ALWAYS);
-                user.Bank.CopyTo(user.Items.Select(t => t.Item));
 
                 if (user == null)
                 {
                     await message.Channel.SendMessageAsync($"{message.Author} is not registered, please type +register.");
                     return false;
                 }
+
+                user.Bank = new Inventory(600, Inventory.StackMode.STACK_ALWAYS);
+                user.Bank.CopyTo(user.Items.Select(t => t.Item));
 
                 var res = await ExecuteCommand(bot, message, user, context, option);
                 if (user.Bank.UpdateRequired)
@@ -55,7 +58,13 @@ namespace RS3Bot.Cli
 
                     context.AttachRange(items);
                     context.AddRange(items);
+                    SaveChanges = true;
+                }
+
+                if(SaveChanges)
+                {
                     await context.SaveChangesAsync();
+                    SaveChanges = false;
                 }
 
                 return res;

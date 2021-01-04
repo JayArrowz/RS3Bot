@@ -14,6 +14,9 @@ namespace RS3Bot.DAL
         public DbSet<UserItem> UserItems { get; set; }
         public DbSet<SkillSet> SkillSets { get; set; }
         public DbSet<Skill> Skills { get; set; }
+        public DbSet<CurrentTask> CurrentTasks { get; set; }
+        public DbSet<ExpGain> CurrentTaskXpGains { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options = null, ILoggerFactory loggerFactory = null)
             : base(options)
         {
@@ -31,6 +34,17 @@ namespace RS3Bot.DAL
                 .HasMany(t => t.Equipment)
                 .WithOne(t => t.User)
                 .HasForeignKey(t => t.UserId);
+            
+            builder.Entity<ApplicationUser>()
+                .HasOne(t => t.CurrentTask)
+                .WithOne(t => t.User)
+                .HasForeignKey<CurrentTask>(t => t.UserId);
+
+            builder.Entity<CurrentTask>()
+                .HasMany(t => t.ExpGains)
+                .WithOne(t => t.CurrentTask)
+                .HasForeignKey(t => t.CurrentTaskId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<ApplicationUser>()
                 .HasOne(t => t.SkillSet)

@@ -24,12 +24,16 @@ using static RS3Bot.Cli.Widget.BankWidget;
 using RS3Bot.Cli.Widget;
 using static RS3Bot.Cli.Widget.LootWidget;
 using static RS3Bot.Cli.Widget.EquipmentWidget;
+using RS3Bot.Abstractions;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 
 namespace RS3BotWeb.Server
 {
     public class Startup
     {
         private PrivateFontCollection _fontCollection;
+        public ILifetimeScope AutofacContainer { get; private set; }
 
         public Startup(IConfiguration configuration)
         {
@@ -37,6 +41,31 @@ namespace RS3BotWeb.Server
         }
 
         public IConfiguration Configuration { get; }
+
+        // ConfigureContainer is where you can register things directly
+        // with Autofac. This runs after ConfigureServices so the things
+        // here will override registrations made in ConfigureServices.
+        // Don't build the container; that gets done for you by the factory.
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+
+            builder.RegisterType<RegisterCommand>().As<ICommand>();
+            builder.RegisterType<DiceCommand>().As<ICommand>();
+            builder.RegisterType<StatsCommand>().As<ICommand>();
+            builder.RegisterType<GpCommand>().As<ICommand>();
+            builder.RegisterType<GearCommand>().As<ICommand>();
+            builder.RegisterType<FishCommand>().As<ICommand>();
+            builder.RegisterType<BankCommand>().As<ICommand>();
+            builder.RegisterType<DbContextFactory>().As<IContextFactory>().SingleInstance();
+            builder.RegisterType<TaskHandler>().As<ITaskHandler>().SingleInstance();
+
+            builder.RegisterType<DiscordBot>().As<IDiscordBot>().SingleInstance();
+            builder.RegisterType<CliParser>().As<ICliParser>().SingleInstance();
+            builder.RegisterType<ItemImageGrabber>().As<IItemImageGrabber>().SingleInstance();
+            builder.RegisterType<BankWidget>().As< IWidget<BankWidgetOptions>>().SingleInstance();
+            builder.RegisterType<LootWidget>().As< IWidget<LootWidgetOptions>>().SingleInstance();
+            builder.RegisterType<EquipmentWidget>().As< IWidget<EquipmentWidgetOptions>>().SingleInstance();
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -60,19 +89,6 @@ namespace RS3BotWeb.Server
             });
             services.AddHttpClient();
             services.AddHostedService<BotService>();
-            services.AddTransient<IContextFactory, DbContextFactory>();
-            services.AddSingleton<IDiscordBot, DiscordBot>();
-            services.AddSingleton<ICliParser, CliParser>();
-            services.AddSingleton<IItemImageGrabber, ItemImageGrabber>();
-            services.AddSingleton<IWidget<BankWidgetOptions>, BankWidget>();
-            services.AddSingleton<IWidget<LootWidgetOptions>, LootWidget>();
-            services.AddSingleton<IWidget<EquipmentWidgetOptions>, EquipmentWidget>();
-            services.AddScoped<ICommand, RegisterCommand>();
-            services.AddScoped<ICommand, DiceCommand>();
-            services.AddScoped<ICommand, StatsCommand>();
-            services.AddScoped<ICommand, GpCommand>();
-            services.AddScoped<ICommand, BankCommand>();
-            services.AddScoped<ICommand, GearCommand>();
             AddRsFonts(services);
 
             services.AddControllersWithViews();
@@ -104,6 +120,7 @@ namespace RS3BotWeb.Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            this.AutofacContainer = app.ApplicationServices.GetAutofacRoot();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

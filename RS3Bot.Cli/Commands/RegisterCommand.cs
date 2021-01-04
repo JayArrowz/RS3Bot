@@ -5,6 +5,7 @@ using RS3Bot.DAL;
 using RS3Bot.Abstractions.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace RS3Bot.Cli.Commands
 {
@@ -38,7 +39,8 @@ namespace RS3Bot.Cli.Commands
                         NormalizedUserName = message.Author.Username.ToUpper(),
                         Id = userId.ToString(),
                         PasswordHash = "TestAtm",
-                        SkillSet = skillSet
+                        SkillSet = skillSet,
+                        CurrentTask = new CurrentTask { Notified = true, UserId = userId.ToString(), UnlockTime = DateTime.MinValue }
                     };
 
                     dbContext.Add(applicationUser);

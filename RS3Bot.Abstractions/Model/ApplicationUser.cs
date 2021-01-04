@@ -11,9 +11,14 @@ namespace RS3Bot.Abstractions.Model
         public ulong DiscordId { get; set; }
         public string PlayerName { get; set; }
 
+        [Required]
         public SkillSet SkillSet { get; set; }
         public virtual ICollection<UserItem> Items { get; set; }
         public virtual ICollection<EquipmentItem> Equipment { get; set; }
+        public int CurrentTaskId { get; set; }
+
+        [Required]
+        public CurrentTask CurrentTask { get; set; }
 
         [NotMapped]
         public Inventory Bank { get; set; }

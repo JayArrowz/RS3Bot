@@ -19,14 +19,13 @@ namespace RS3Bot.Cli.Commands
 
         protected override async Task<bool> ExecuteCommand(IDiscordBot bot, SocketMessage message, Abstractions.Model.ApplicationUser user, ApplicationDbContext context, DiceOption option)
         {
-            ulong coinAmount = 0L;
             var amountArgs = option.Amount;
             var funDice = string.IsNullOrEmpty(amountArgs);
             var random = new Random();
             var nextRoll = random.Next(1, 100);
 
             var eb = new EmbedBuilder { Title = "Dice Roll" };
-            var diceResult = new StringBuilder($"{message.Author.Username} rolled {nextRoll} on the percentile dice, and you ");
+            var diceResult = new StringBuilder($"{message.Author.Mention} rolled {nextRoll} on the percentile dice, and you ");
             var win = nextRoll >= 55;
             diceResult.Append(win ? "won" : "lost");
 
@@ -42,7 +41,7 @@ namespace RS3Bot.Cli.Commands
 
                 if (coinItem < (ulong)amountNumber)
                 {
-                    await message.Channel.SendMessageAsync($"{message.Author} does not have {amountArgs} coins to gamble.");
+                    await message.Channel.SendMessageAsync($"{message.Author.Mention} does not have {amountArgs} coins to gamble.");
                     return false;
                 }
 
