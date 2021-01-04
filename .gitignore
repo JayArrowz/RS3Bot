@@ -1,0 +1,5 @@
+obj/
+.vs/
+bin/
+cache/images/
+RS3BotWeb/Server/cache/images/
