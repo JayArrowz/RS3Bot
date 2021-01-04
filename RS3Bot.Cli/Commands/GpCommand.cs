@@ -25,8 +25,8 @@ namespace RS3Bot.Cli.Commands
             {
                 var coins = await context.UserItems
                     .AsQueryable()
-                    .FirstOrDefaultAsync(t => t.UserId == userId && t.ItemId == 995);
-                amount += (coins?.Amount ?? 0);
+                    .FirstOrDefaultAsync(t => t.UserId == userId && t.Item.ItemId == 995);
+                amount += (coins?.Item?.Amount ?? 0);
             }
 
             var eb = new EmbedBuilder { Title = "GP Count" };

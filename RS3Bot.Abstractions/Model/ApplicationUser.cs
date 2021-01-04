@@ -12,5 +12,6 @@ namespace RS3Bot.Abstractions.Model
 
         public SkillSet SkillSet { get; set; }
         public virtual ICollection<UserItem> Items { get; set; }
+        public virtual ICollection<EquipmentItem> Equipment { get; set; }
     }
 }

@@ -10,6 +10,7 @@ namespace RS3Bot.DAL
     {
         private readonly ILoggerFactory _loggerFactory;
 
+        public DbSet<EquipmentItem> EquipmentItems { get; set; }
         public DbSet<UserItem> UserItems { get; set; }
         public DbSet<SkillSet> SkillSets { get; set; }
         public DbSet<Skill> Skills { get; set; }
@@ -23,6 +24,11 @@ namespace RS3Bot.DAL
         {
             builder.Entity<ApplicationUser>()
                 .HasMany(t => t.Items)
+                .WithOne(t => t.User)
+                .HasForeignKey(t => t.UserId);
+
+            builder.Entity<ApplicationUser>()
+                .HasMany(t => t.Equipment)
                 .WithOne(t => t.User)
                 .HasForeignKey(t => t.UserId);
 

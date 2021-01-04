@@ -55,11 +55,11 @@ namespace RS3Bot.Cli.Widget
                         g.DrawString(bankTitle, titleFont, Brushes.Gold, 280 - (size.Width / 2), size.Height + 2);
                         foreach (var item in bankWidgetOptions.Items)
                         {
-                            using (var rawStream = await _itemImageGrabber.GetAsync(item.ItemId))
+                            using (var rawStream = await _itemImageGrabber.GetAsync(item.Item.ItemId))
                             {
                                 using (var imageStream = Image.FromStream(rawStream))
                                 {
-                                    using (SolidBrush drawBrush = new SolidBrush(StackFormatter.GetColor((long)item.Amount)))
+                                    using (SolidBrush drawBrush = new SolidBrush(StackFormatter.GetColor((long)item.Item.Amount)))
                                     {
                                         var row = (int)Math.Floor(amountCount / (double)maxItemsPerRow);
                                         var itemX = 18 + ((amountCount % maxItemsPerRow) * 45);
@@ -69,14 +69,14 @@ namespace RS3Bot.Cli.Widget
                                         var verticalCenter = itemX + ((maxItemSquareSize - imageStream.Width) / 2);
 
                                         g.DrawImage(imageStream, verticalCenter, horizontalCenter, imageStream.Width, imageStream.Height);
-                                        g.DrawString(StackFormatter.QuantityToRSStackSize((long)item.Amount), font, drawBrush,
+                                        g.DrawString(StackFormatter.QuantityToRSStackSize((long)item.Item.Amount), font, drawBrush,
                                             itemX - 10,
                                             itemY - 7,
                                             drawFormat);
 
                                         if (bankWidgetOptions.Options.ShowId)
                                         {
-                                            g.DrawString(item.ItemId.ToString(), font, Brushes.White,
+                                            g.DrawString(item.Item.ItemId.ToString(), font, Brushes.White,
                                                itemX - 10,
                                                itemY + 30,
                                                drawFormat);

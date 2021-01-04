@@ -39,8 +39,8 @@ namespace RS3Bot.Cli.Commands
             {
                 using (var context = _contextFactory.Create())
                 {
-                    var coinItem = context.UserItems.AsQueryable().FirstOrDefault(t => t.UserId == userId && t.ItemId == 995);
-                    coinAmount += (coinItem?.Amount ?? 0);
+                    var coinItem = context.UserItems.AsQueryable().FirstOrDefault(t => t.UserId == userId && t.Item.ItemId == 995);
+                    coinAmount += (coinItem?.Item?.Amount ?? 0);
 
                     var amountNumber = StackFormatter.StackSizeToQuantity(option.Amount);
                     if(amountNumber <= 0)
@@ -67,7 +67,7 @@ namespace RS3Bot.Cli.Commands
                         context.Remove(coinItem);
                     } else
                     {
-                        coinItem.Amount = coinAmount;
+                        coinItem.Item.Amount = coinAmount;
                         context.Update(coinItem);
                     }
                     await context.SaveChangesAsync();

@@ -66,14 +66,14 @@ namespace RS3Bot.Cli.Widget
                             }
                         }
 
-                        using (var itemStream = await _imageGrabber.GetAsync(item.ItemId))
+                        using (var itemStream = await _imageGrabber.GetAsync(item.Item.ItemId))
                         using (var imageStream = Image.FromStream(itemStream))
-                        using (SolidBrush drawBrush = new SolidBrush(StackFormatter.GetColor((long)item.Amount)))
+                        using (SolidBrush drawBrush = new SolidBrush(StackFormatter.GetColor((long)item.Item.Amount)))
                         {
                             var horizontalCenter = itemY + ((32 - imageStream.Height) / 2);
                             var verticalCenter = itemX + ((32 - imageStream.Width) / 2);
                             g.DrawImage(imageStream, verticalCenter, horizontalCenter, imageStream.Width, imageStream.Height);
-                            g.DrawString(StackFormatter.QuantityToRSStackSize((long)item.Amount), font, drawBrush,
+                            g.DrawString(StackFormatter.QuantityToRSStackSize((long)item.Item.Amount), font, drawBrush,
                                             itemX - 7,
                                             itemY - 4);
 
