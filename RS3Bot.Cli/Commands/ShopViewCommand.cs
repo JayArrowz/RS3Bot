@@ -34,7 +34,7 @@ namespace RS3Bot.Cli.Commands
 
             using (var shopWidget =
          await _shopWidget.GetWidgetAsync(
-             new ShopWidgetOptions { Title = shop.Name, Items = shop.Items.Select(t => t.Item).ToList() }))
+             new ShopWidgetOptions { Title = shop.Name, Items = shop.Items }))
             {
                 await message.Channel.SendFileAsync(shopWidget, "image.png", string.Empty);
             }

@@ -14,5 +14,8 @@ namespace RS3Bot.Cli.Options
 
         [Value(2, HelpText = "Item name or Id.", Required = true)]
         public string ItemNameOrId { get; set; }
+
+        [Option('c', "confirm", HelpText = "Confirm buy")]
+        public bool? Confirm { get; set; }
     }
 }

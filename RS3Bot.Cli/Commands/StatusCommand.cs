@@ -18,7 +18,7 @@ namespace RS3Bot.Cli.Commands
         }
 
         protected override async Task<bool> ExecuteCommand(IDiscordBot bot, SocketMessage message, ApplicationUser user, ApplicationDbContext context, StatusOption option)
-        {
+        {            
             var taskName = user.CurrentTask.TaskName;
             if (!user.CurrentTask.Notified && DateTime.Now > user.CurrentTask.UnlockTime)
             {

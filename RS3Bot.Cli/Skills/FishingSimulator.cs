@@ -39,6 +39,17 @@ namespace RS3Bot.Cli.Skills
                 return null;
             }
 
+            var requiredItems = string.Join(", ", 
+                args.ItemsRequired.Where(item => !user.Bank.Contains(item.ItemId) || user.Bank.GetAmount(item.ItemId) < item.Amount)
+                .Select(item => $"{item.Amount} x {ItemDefinition.GetItemName(item.ItemId)}"));
+
+            if (!string.IsNullOrEmpty(requiredItems))
+            {
+                await message.Channel.SendMessageAsync($"{message.Author.Mention} needs {requiredItems} to fish {args.Name}. {fishingEmote}");
+                return null;
+            }
+
+
             if (!option.Amount.HasValue || option.Amount <= 0)
             {
                 option.Amount = (int)Math.Floor(MaxTripLength.TotalMilliseconds / scaledTimePerFish.TotalMilliseconds);

@@ -1,6 +1,8 @@
 ﻿using Autofac;
+using CommandLine;
 using Discord.WebSocket;
 using RS3Bot.Abstractions.Extensions;
+using RS3Bot.Abstractions.Interfaces;
 using RS3Bot.Abstractions.Model;
 using RS3Bot.Cli.Options;
 using System;
@@ -14,13 +16,20 @@ namespace RS3Bot.Cli
     {
         public List<Shop> ShopData { get; set; }
 
+        private readonly IReplyAwaiter _replyAwaiter;
+
+        public ShopManager(IReplyAwaiter replyAwaiter)
+        {
+            _replyAwaiter = replyAwaiter;
+        }
+
         public Shop GetForName(string name)
         {
             var shop = ShopData.FirstOrDefault(t => t.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase)
             || t.OtherNames != null && t.OtherNames.Any(v => v.Equals(name, StringComparison.InvariantCultureIgnoreCase)));
             return shop;
         }
-        
+
         public string GetNames()
         {
             return string.Join(", ", ShopData.Select(t => t.Name));
@@ -36,7 +45,7 @@ namespace RS3Bot.Cli
                 return false;
             }
 
-            var amount = (ulong) option.Amount;
+            var amount = (ulong)option.Amount;
             if (amount <= 0)
             {
                 await message.Channel.SendMessageAsync($"Invalid amount {amount}");
@@ -49,6 +58,10 @@ namespace RS3Bot.Cli
             {
                 shopItem = shop.Items.FirstOrDefault(t => t.Item.ItemId == itemId);
             }
+            else
+            {
+                shopItem = shop.Items.FirstOrDefault(t => ItemDefinition.GetItemName(t.Item.ItemId).Contains(option.ItemNameOrId, StringComparison.InvariantCultureIgnoreCase));
+            }
 
 
             if (shopItem == null)
@@ -58,22 +71,40 @@ namespace RS3Bot.Cli
             }
 
             var currencyAmount = user.Bank.GetAmount(shop.Currency);
+            var currencyName = ItemDefinition.GetItemName(shop.Currency);
             var maxAmountCanBuy = (ulong)Math.Floor(currencyAmount / (double)shopItem.Price);
             if (maxAmountCanBuy == 0)
             {
-                await message.Channel.SendMessageAsync($"You do not have enough gold to buy this item.");
+                await message.Channel.SendMessageAsync($"You do not have enough {currencyName} to buy this item.");
                 return false;
             }
 
             amount = Math.Min(shopItem.Item.Amount, amount);
             amount = Math.Min(maxAmountCanBuy, amount);
 
-
+            var itemName = ItemDefinition.GetItemName(shopItem.Item.ItemId);
             var totalPrice = amount * (ulong)shopItem.Price;
-            await message.Channel.SendMessageAsync($"{user.Mention} buys {amount} x {option.ItemNameOrId} for {totalPrice} coins.");
 
-            user.Bank.Remove(shop.Currency, totalPrice);
-            user.Bank.Add(shopItem.Item.ItemId, amount);
+            if (option.Confirm.GetValueOrDefault())
+            {
+                await message.Channel.SendMessageAsync($"{user.Mention} buys {amount} x {itemName} for {totalPrice} coins.");
+
+                user.Bank.Remove(shop.Currency, totalPrice);
+                user.Bank.Add(shopItem.Item.ItemId, amount);
+            }
+            else
+            {
+                var reply = _replyAwaiter.CreateReply(new CurrentTask
+                {
+                    ChannelId = message.Channel.Id,
+                    MessageId = user.CurrentTask.MessageId,
+                    UserId = user.Id,
+                    User = user,
+                    Command = $"{Parser.Default.FormatCommandLine(option)} --confirm=true"
+                });
+                await message.Channel.SendMessageAsync($"Press `+{reply.ConfirmChar}` to confirm buying {itemName} x {amount} for {totalPrice} {currencyName}{(totalPrice > 0 ? "'s" : "")}.");
+                await _replyAwaiter.Add(reply);
+            }
             return true;
         }
 

@@ -18,8 +18,9 @@ namespace RS3Bot.Cli.Commands
 
         protected override async Task<bool> ExecuteCommand(IDiscordBot bot, SocketMessage message, ApplicationUser user, ApplicationDbContext context, ShopBuyOption option)
         {
+
             var updated = await _shopManager.Buy(user, message, option);
-            if (updated)
+            if (option.Confirm.GetValueOrDefault() && updated)
             {
                 user.Bank.Update();
                 SaveChanges = true;
