@@ -152,7 +152,7 @@ namespace RS3Bot.Abstractions.Model
 		 */
         public static Skill UpdateCurrentLevel(int currentLevel, Skill skill)
         {
-            return new Skill(skill.SkillId, skill.Experience, currentLevel, skill.MaximumLevel);
+            return new Skill(skill.Id, skill.SkillId, skill.Experience, currentLevel, skill.MaximumLevel);
         }
 
         /**
@@ -165,7 +165,7 @@ namespace RS3Bot.Abstractions.Model
 		 */
         public static Skill UpdateExperience(double experience, Skill skill)
         {
-            return new Skill(skill.SkillId, experience, skill.CurrentLevel, skill.MaximumLevel);
+            return new Skill(skill.Id, skill.SkillId, experience, skill.CurrentLevel, skill.MaximumLevel);
         }
 
         /**
@@ -178,7 +178,7 @@ namespace RS3Bot.Abstractions.Model
 		 */
         public static Skill UpdateMaximumLevel(int maximumLevel, Skill skill)
         {
-            return new Skill(skill.SkillId, skill.Experience, skill.CurrentLevel, maximumLevel);
+            return new Skill(skill.Id, skill.SkillId, skill.Experience, skill.CurrentLevel, maximumLevel);
         }
 
         /**
@@ -198,6 +198,14 @@ namespace RS3Bot.Abstractions.Model
 
         public int SkillId { get; set; }
 
+        public Skill(int skillId, double experience, int currentLevel, int maximumLevel)
+        {
+            this.SkillId = skillId;
+            this.Experience = experience;
+            this.CurrentLevel = currentLevel;
+            this.MaximumLevel = maximumLevel;
+        }
+
         /**
 		 * Creates a skill.
 		 *
@@ -205,8 +213,9 @@ namespace RS3Bot.Abstractions.Model
 		 * @param currentLevel The current level.
 		 * @param maximumLevel The maximum level.
 		 */
-        public Skill(int skillId, double experience, int currentLevel, int maximumLevel)
+        public Skill(int pk, int skillId, double experience, int currentLevel, int maximumLevel)
         {
+            this.Id = pk;
             this.SkillId = skillId;
             this.Experience = experience;
             this.CurrentLevel = currentLevel;

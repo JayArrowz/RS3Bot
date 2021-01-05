@@ -21,6 +21,7 @@
     <None Remove="Images\Loot_Footer.png" />
     <None Remove="Images\Loot_Head.png" />
     <None Remove="Images\Loot_Row.png" />
+    <None Remove="Skills\Data\fishing.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +50,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Images\Loot_Row.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Skills\Data\fishing.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

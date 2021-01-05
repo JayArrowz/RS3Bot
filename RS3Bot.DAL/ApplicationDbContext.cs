@@ -16,7 +16,7 @@ namespace RS3Bot.DAL
         public DbSet<Skill> Skills { get; set; }
         public DbSet<CurrentTask> CurrentTasks { get; set; }
         public DbSet<ExpGain> CurrentTaskXpGains { get; set; }
-
+        public DbSet<TaskItem> TaskItems { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options = null, ILoggerFactory loggerFactory = null)
             : base(options)
         {
@@ -50,6 +50,11 @@ namespace RS3Bot.DAL
                 .HasOne(t => t.SkillSet)
                 .WithOne(t => t.User)
                 .HasForeignKey<SkillSet>(t => t.UserId);
+
+            builder.Entity<CurrentTask>()
+                .HasMany(t => t.Items)
+                .WithOne(t => t.CurrentTask)
+                .HasForeignKey(t => t.CurrentTaskId);
             base.OnModelCreating(builder);
         }
     }

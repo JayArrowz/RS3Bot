@@ -1,10 +1,10 @@
-﻿using RS3Bot.Abstractions.Interfaces;
+﻿using Autofac;
+using RS3Bot.Abstractions.Interfaces;
 using System;
 
 namespace RS3Bot.Abstractions.Interfaces
 {
-    public interface ITaskHandler : IDisposable
+    public interface ITaskHandler : IDisposable, IStartable
     {
-        void Start(IDiscordBot discordBot);
     }
 }

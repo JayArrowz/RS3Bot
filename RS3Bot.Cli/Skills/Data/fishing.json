@@ -1,0 +1,25 @@
+﻿[
+  {
+    "Level": 1,
+    "Xp": 10,
+    "Id": 317,
+    "TimePerFish": 3.6,
+    "Name": "Shrimp",
+    "OtherNames": [ "Shrimps", "Shrim", "Shri" ]
+  },
+  {
+    "Level": 10,
+    "Xp": 20,
+    "Name": "Karambwanji",
+    "TimePerFish": 3.6,
+    "Id": 3142,
+    "OtherNames": [ "Kara", "Karam", "Karambwa" ]
+  },
+  {
+    "Level": 50,
+    "Xp": 50,
+    "Name": "Swordfish",
+    "TimePerFish": 11,
+    "Id": 371
+  }
+]

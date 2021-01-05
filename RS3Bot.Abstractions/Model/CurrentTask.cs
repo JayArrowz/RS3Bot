@@ -16,5 +16,6 @@ namespace RS3Bot.Abstractions.Model
         public ulong ChannelId { get; set; }
         public string CompletionMessage { get; set; }
         public virtual ICollection<ExpGain> ExpGains { get; set; }
+        public virtual ICollection<TaskItem> Items { get; set; } 
     }
 }

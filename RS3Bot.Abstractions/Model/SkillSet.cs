@@ -39,7 +39,7 @@ namespace RS3Bot.Abstractions.Model
         public void Init()
         {
             Skills = Enumerable.Range(0, SKILL_COUNT)
-                .Select(id => id == Skill.Hitpoints ? new Skill(id, 1154, 10, 10) : new Skill(id, 0, 1, 1))
+                .Select(id => id == Skill.Hitpoints ? new Skill(0, id, 1154, 10, 10) : new Skill(0, id, 0, 1, 1))
                 .ToList();
         }
 
@@ -61,22 +61,16 @@ namespace RS3Bot.Abstractions.Model
             int delta = maximum - old.MaximumLevel;
             current += delta;
 
-            SetSkill(id, new Skill(id, newExperience, current, maximum));
+            old.Experience = newExperience;
+            old.CurrentLevel = current;
+            old.MaximumLevel = maximum;
+            old.SkillId = id;
         }
 
-        /**
-		 * Sets a {@link Skill}.
-		 *
-		 * @param id The id.
-		 * @param skill The skill.
-		 */
-        public void SetSkill(int id, Skill skill)
+        public int GetLevel(int skill)
         {
-            Skill old = Skills.FirstOrDefault(t => t.SkillId == id);
-            Skills.Remove(old);
-            Skills.Add(skill);
+            return Skills.FirstOrDefault(t => t.SkillId == skill)?.CurrentLevel ?? 1;
         }
-
 
         /**
 		 * Gets the minimum experience required for the specified level.
@@ -115,5 +109,11 @@ namespace RS3Bot.Abstractions.Model
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
         public virtual ICollection<Skill> Skills { get; set; }
+
+        public double GetExp(int skillId)
+        {
+            var skill = Skills.FirstOrDefault(t => t.SkillId == skillId);
+            return skill.Experience;
+        }
     }
 }

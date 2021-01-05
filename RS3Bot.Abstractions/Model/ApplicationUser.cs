@@ -10,6 +10,7 @@ namespace RS3Bot.Abstractions.Model
         [Key]
         public ulong DiscordId { get; set; }
         public string PlayerName { get; set; }
+        public string Mention { get; set; }
 
         [Required]
         public SkillSet SkillSet { get; set; }

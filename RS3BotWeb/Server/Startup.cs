@@ -27,6 +27,8 @@ using static RS3Bot.Cli.Widget.EquipmentWidget;
 using RS3Bot.Abstractions;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using RS3Bot.Cli.Options;
+using RS3Bot.Cli.Skills;
 
 namespace RS3BotWeb.Server
 {
@@ -57,7 +59,9 @@ namespace RS3BotWeb.Server
             builder.RegisterType<FishCommand>().As<ICommand>();
             builder.RegisterType<BankCommand>().As<ICommand>();
             builder.RegisterType<DbContextFactory>().As<IContextFactory>().SingleInstance();
-            builder.RegisterType<TaskHandler>().As<ITaskHandler>().SingleInstance();
+            builder.RegisterType<TaskHandler>().As<ITaskHandler>().As<IStartable>().SingleInstance();
+
+            builder.RegisterType<FishingSimulator>().As<ISimulator<FishOption>>().As<IStartable>().SingleInstance();
 
             builder.RegisterType<DiscordBot>().As<IDiscordBot>().SingleInstance();
             builder.RegisterType<CliParser>().As<ICliParser>().SingleInstance();

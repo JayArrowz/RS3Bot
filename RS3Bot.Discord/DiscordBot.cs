@@ -10,14 +10,12 @@ namespace RS3Bot.Discord
     public class DiscordBot : IDiscordBot
     {
         private readonly ICliParser _cliParser;
-        private readonly ITaskHandler _taskHandler;
 
         public DiscordSocketClient Client { get; }
         public List<SocketChannel> Channels { get; set; }
-        public DiscordBot(ICliParser cliParser, ITaskHandler taskHandler)
+        public DiscordBot(ICliParser cliParser)
         {
             _cliParser = cliParser;
-            _taskHandler = taskHandler;
             Client = new DiscordSocketClient();
             Client.MessageReceived += Client_MessageReceived;
             Client.ChannelCreated += Client_ChannelCreated;
@@ -55,7 +53,6 @@ namespace RS3Bot.Discord
 
         public async Task LoginAsync(string token)
         {
-            _taskHandler.Start(this);
             await Client.LoginAsync(TokenType.Bot, token);
             await Client.StartAsync();
         }

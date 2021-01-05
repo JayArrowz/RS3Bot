@@ -1,5 +1,6 @@
 ﻿using Discord.WebSocket;
 using Microsoft.EntityFrameworkCore;
+using RS3Bot.Abstractions.Constants;
 using RS3Bot.Abstractions.Interfaces;
 using RS3Bot.Abstractions.Model;
 using RS3Bot.DAL;
@@ -31,6 +32,8 @@ namespace RS3Bot.Cli
                     .Include(t => t.Items)
                     .Include(t => t.Equipment)
                     .Include(t => t.CurrentTask)
+                    .Include(t => t.SkillSet)
+                    .ThenInclude(t => t.Skills)
                     .FirstOrDefaultAsync(t => t.Id == userId);
 
                 if (user == null)
@@ -39,29 +42,17 @@ namespace RS3Bot.Cli
                     return false;
                 }
 
-                user.Bank = new Inventory(600, Inventory.StackMode.STACK_ALWAYS);
+                user.Bank = new Inventory(BankConstants.Size, Inventory.StackMode.STACK_ALWAYS);
                 user.Bank.CopyTo(user.Items.Select(t => t.Item));
-
-                var res = await ExecuteCommand(bot, message, user, context, option);
+                bool res = await ExecuteCommand(bot, message, user, context, option);
+                
                 if (user.Bank.UpdateRequired)
                 {
-                    context.RemoveRange(user.Items);
-                    await context.SaveChangesAsync();
-                    var items = user.Bank.GetItems()
-                        .Where(t => t != null)
-                        .Select(t => new UserItem
-                        {
-                            UserId = user.Id,
-                            Item = t
-                        }).ToList();
-                    user.Bank.UpdateRequired = false;
-
-                    context.AttachRange(items);
-                    context.AddRange(items);
+                    await BankSaver.SaveBank(context, user);
                     SaveChanges = true;
                 }
 
-                if(SaveChanges)
+                if (SaveChanges)
                 {
                     await context.SaveChangesAsync();
                     SaveChanges = false;

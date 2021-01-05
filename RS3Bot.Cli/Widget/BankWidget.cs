@@ -70,7 +70,7 @@ namespace RS3Bot.Cli.Widget
 
                                         g.DrawImage(imageStream, verticalCenter, horizontalCenter, imageStream.Width, imageStream.Height);
                                         g.DrawString(StackFormatter.QuantityToRSStackSize((long)item.Item.Amount), font, drawBrush,
-                                            itemX - 10,
+                                            itemX - 5,
                                             itemY - 7,
                                             drawFormat);
 

@@ -40,7 +40,8 @@ namespace RS3Bot.Cli.Commands
                         Id = userId.ToString(),
                         PasswordHash = "TestAtm",
                         SkillSet = skillSet,
-                        CurrentTask = new CurrentTask { Notified = true, UserId = userId.ToString(), UnlockTime = DateTime.MinValue }
+                        CurrentTask = new CurrentTask { Notified = true, UserId = userId.ToString(), UnlockTime = DateTime.MinValue },
+                        Mention = message.Author.Mention
                     };
 
                     dbContext.Add(applicationUser);
