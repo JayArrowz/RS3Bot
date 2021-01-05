@@ -55,6 +55,7 @@ namespace RS3BotWeb.Server
             builder.RegisterType<DiceCommand>().As<ICommand>();
             builder.RegisterType<StatsCommand>().As<ICommand>();
             builder.RegisterType<GpCommand>().As<ICommand>();
+            builder.RegisterType<StatusCommand>().As<ICommand>();
             builder.RegisterType<GearCommand>().As<ICommand>();
             builder.RegisterType<FishCommand>().As<ICommand>();
             builder.RegisterType<BankCommand>().As<ICommand>();
