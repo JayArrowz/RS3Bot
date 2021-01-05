@@ -76,14 +76,7 @@ namespace RS3Bot.Cli.Skills
 
         public void Start()
         {
-            var serializer = new JsonSerializer();
-
-            using (var fishingStream = ResourceExtensions.GetStreamCopy(typeof(FishingSimulator), "RS3Bot.Cli.Skills.Data.fishing.json"))
-            using (var jsonStream = new StreamReader(fishingStream))
-            using (var jsonTextReader = new JsonTextReader(jsonStream))
-            {
-                FishingData = serializer.Deserialize<List<FishingSkillData>>(jsonTextReader);
-            }
+            FishingData = ResourceExtensions.DeserializeResource<List<FishingSkillData>>(typeof(FishingSimulator), "RS3Bot.Cli.Data.fishing.json");
         }
     }
 }

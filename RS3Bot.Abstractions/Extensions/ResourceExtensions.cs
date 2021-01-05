@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.IO;
 
 namespace RS3Bot.Abstractions.Extensions
@@ -14,6 +15,18 @@ namespace RS3Bot.Abstractions.Extensions
                 resourceStream.CopyTo(memoryStream);
                 memoryStream.Position = 0;
                 return memoryStream;
+            }
+        }
+
+        public static T DeserializeResource<T>(Type asmType, string name)
+        {
+            var serializer = new JsonSerializer();
+
+            using (var fishingStream = GetStreamCopy(asmType, name))
+            using (var jsonStream = new StreamReader(fishingStream))
+            using (var jsonTextReader = new JsonTextReader(jsonStream))
+            {
+                return serializer.Deserialize<T>(jsonTextReader);
             }
         }
     }

@@ -29,6 +29,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using RS3Bot.Cli.Options;
 using RS3Bot.Cli.Skills;
+using static RS3Bot.Cli.Widget.ShopWidget;
 
 namespace RS3BotWeb.Server
 {
@@ -59,16 +60,20 @@ namespace RS3BotWeb.Server
             builder.RegisterType<GearCommand>().As<ICommand>();
             builder.RegisterType<FishCommand>().As<ICommand>();
             builder.RegisterType<BankCommand>().As<ICommand>();
+            builder.RegisterType<ShopViewCommand>().As<ICommand>();
+            builder.RegisterType<ShopBuyCommand>().As<ICommand>();
             builder.RegisterType<DbContextFactory>().As<IContextFactory>().SingleInstance();
             builder.RegisterType<TaskHandler>().As<ITaskHandler>().As<IStartable>().SingleInstance();
 
             builder.RegisterType<FishingSimulator>().As<ISimulator<FishOption>>().As<IStartable>().SingleInstance();
+            builder.RegisterType<ShopManager>().AsSelf().As<IStartable>().SingleInstance();
 
             builder.RegisterType<DiscordBot>().As<IDiscordBot>().SingleInstance();
             builder.RegisterType<CliParser>().As<ICliParser>().SingleInstance();
             builder.RegisterType<ItemImageGrabber>().As<IItemImageGrabber>().SingleInstance();
             builder.RegisterType<BankWidget>().As< IWidget<BankWidgetOptions>>().SingleInstance();
             builder.RegisterType<LootWidget>().As< IWidget<LootWidgetOptions>>().SingleInstance();
+            builder.RegisterType<ShopWidget>().As< IWidget<ShopWidgetOptions>>().SingleInstance();
             builder.RegisterType<ReplyAwaiter>().As<IReplyAwaiter>().SingleInstance();
             builder.RegisterType<EquipmentWidget>().As< IWidget<EquipmentWidgetOptions>>().SingleInstance();
         }

@@ -6,6 +6,7 @@ using RS3Bot.DAL;
 using System.Linq;
 using System.Threading.Tasks;
 using static RS3Bot.Cli.Widget.BankWidget;
+using static RS3Bot.Cli.Widget.ShopWidget;
 
 namespace RS3Bot.Cli.Commands
 {

@@ -85,6 +85,10 @@ namespace RS3Bot.Abstractions.Extensions
 
         public static ulong StackSizeToQuantity(string str)
         {
+            if(string.IsNullOrEmpty(str))
+            {
+                return 0;
+            }
             int multiplier = GetMultiplier(str, out var prefix);
             ulong parsedValue = ulong.Parse(prefix);
             return parsedValue * (ulong) multiplier;

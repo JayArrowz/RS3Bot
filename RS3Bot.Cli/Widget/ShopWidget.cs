@@ -8,70 +8,75 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using static RS3Bot.Cli.Widget.LootWidget;
+using static RS3Bot.Cli.Widget.ShopWidget;
 
 namespace RS3Bot.Cli.Widget
 {
-    public class LootWidget : IWidget<LootWidgetOptions>
+    public class ShopWidget : IWidget<ShopWidgetOptions>
     {
-        private static readonly int MaxRowSize = 5;
-        private static readonly int RowHeight = 38;
-        private static readonly int FooterHeight = 59;
+        private static readonly int MaxRowSize = 3;
+        private static readonly int YSpacing = 65;
+        private static readonly int FooterHeight = 17;
+        private static readonly int XSpacing = 153;
         private readonly IItemImageGrabber _imageGrabber;
         private readonly PrivateFontCollection _fontCollection;
 
-        public class LootWidgetOptions
+        public class ShopWidgetOptions
         {
-            public List<UserItem> Items { get; set; }
-            public BankOption Options { get; set; }
+            public List<Item> Items { get; set; }
+            public string Title { get; set; }
         }
 
-        public LootWidget(IItemImageGrabber imageGrabber, PrivateFontCollection fontCollection)
+        public ShopWidget(IItemImageGrabber imageGrabber, PrivateFontCollection fontCollection)
         {
             _imageGrabber = imageGrabber;
             _fontCollection = fontCollection;
         }
 
-        public async Task<Stream> GetWidgetAsync(LootWidgetOptions lootWidgetOptions)
+        public async Task<Stream> GetWidgetAsync(ShopWidgetOptions lootWidgetOptions)
         {
-            var headerStream = ResourceExtensions.GetStreamCopy(typeof(CliParser), "RS3Bot.Cli.Images.Loot_Head.png");
+            var headerStream = ResourceExtensions.GetStreamCopy(typeof(CliParser), "RS3Bot.Cli.Images.Shop_Header.png");
             using (var headerImage = Image.FromStream(headerStream))
-            using (var footerStream = ResourceExtensions.GetStreamCopy(typeof(CliParser), "RS3Bot.Cli.Images.Loot_Footer.png"))
+            using (var footerStream = ResourceExtensions.GetStreamCopy(typeof(CliParser), "RS3Bot.Cli.Images.Shop_Footer.png"))
             using (var footerImage = Image.FromStream(footerStream))
+            using(var stringFormat = new StringFormat { FormatFlags = StringFormatFlags.NoWrap })
             {
                 var rowAmount = (int)Math.Ceiling(lootWidgetOptions.Items.Count / (double)MaxRowSize);
                 var headerHeight = headerImage.Height;
-                using (var lootImage = new Bitmap(headerImage.Width, headerHeight + (rowAmount * RowHeight) + FooterHeight))
+                using (var lootImage = new Bitmap(headerImage.Width, headerHeight + (rowAmount * YSpacing) + FooterHeight))
                 using (var font = new Font(_fontCollection.Families[0], 8))
-                using (var titleFont = new Font(_fontCollection.Families[0], 12))
-                using (var rowStream = ResourceExtensions.GetStreamCopy(typeof(CliParser), "RS3Bot.Cli.Images.Loot_Row.png"))
+                using (var shopItem = ResourceExtensions.GetStreamCopy(typeof(CliParser), "RS3Bot.Cli.Images.Shop_Item.png"))
+                using (var rowStream = ResourceExtensions.GetStreamCopy(typeof(CliParser), "RS3Bot.Cli.Images.Shop_Row.png"))
                 using (var rowImage = Image.FromStream(rowStream))
+                using (var shopItemImage = Image.FromStream(shopItem))
+                using (var titleFont = new Font(_fontCollection.Families[0], 40))
                 using (Graphics g = Graphics.FromImage(lootImage))
                 {
                     g.DrawImage(headerImage, 0, 0);
+                    g.DrawString(lootWidgetOptions.Title, font, Brushes.Gold, 26, 12, stringFormat);
                     for (int i = 0; i < lootWidgetOptions.Items.Count; i++)
                     {
                         var row = (int)Math.Floor(i / (double)MaxRowSize);
                         var addNewRow = i % MaxRowSize == 0;
-                        var itemX = 20 + ((i % MaxRowSize) * 45);
-                        var itemY = 45 + (row * RowHeight);
+                        var itemX = 30 + ((i % MaxRowSize) * XSpacing);
+                        var itemY = 80 + (row * YSpacing);
                         var item = lootWidgetOptions.Items[i];
                         if (addNewRow)
                         {
-                            g.DrawImage(rowImage, 0, headerHeight + (row * RowHeight));
+                            g.DrawImage(rowImage, 0, headerHeight + (row * YSpacing));
                         }
 
-                        using (var itemStream = await _imageGrabber.GetAsync(item.Item.ItemId))
+                        using (var itemStream = await _imageGrabber.GetAsync(item.ItemId))
                         using (var imageStream = Image.FromStream(itemStream))
-                        using (SolidBrush drawBrush = new SolidBrush(StackFormatter.GetColor(item.Item.Amount)))
+                        using (SolidBrush drawBrush = new SolidBrush(StackFormatter.GetColor(item.Amount)))
                         {
                             var horizontalCenter = itemY + ((32 - imageStream.Height) / 2);
                             var verticalCenter = itemX + ((32 - imageStream.Width) / 2);
+
+                            g.DrawImage(shopItemImage, itemX - 20, itemY - 15);
                             g.DrawImage(imageStream, verticalCenter, horizontalCenter, imageStream.Width, imageStream.Height);
-                            g.DrawString(StackFormatter.QuantityToRSStackSize((long)item.Item.Amount), font, drawBrush,
+                            g.DrawString(StackFormatter.QuantityToRSStackSize((long)item.Amount), font, drawBrush,
                                             itemX - 7,
                                             itemY - 4);
 
