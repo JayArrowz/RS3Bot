@@ -68,5 +68,54 @@
         "Price": 1
       }
     ]
+  },
+  {
+    "Name": "Fishing Store",
+    "OtherNames": [ "Fishing" ],
+    "Currency": 995,
+    "Items": [
+      {
+        "Item": {
+          "ItemId": 303,
+          "Amount": 5
+        },
+        "Price": 10
+      },
+      {
+        "Item": {
+          "ItemId": 307,
+          "Amount": 5
+        },
+        "Price": 15
+      },
+      {
+        "Item": {
+          "ItemId": 309,
+          "Amount": 2
+        },
+        "Price": 10
+      },
+      {
+        "Item": {
+          "ItemId": 13431,
+          "Amount": 3
+        },
+        "Price": 10
+      },
+      {
+        "Item": {
+          "ItemId": 313,
+          "Amount": 1000
+        },
+        "Price": 10
+      },
+      {
+        "Item": {
+          "ItemId": 314,
+          "Amount": 1000
+        },
+        "Price": 10
+      }
+    ]
   }
 ]

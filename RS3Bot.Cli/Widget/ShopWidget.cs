@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using static RS3Bot.Cli.Widget.ShopWidget;
 
@@ -21,6 +22,7 @@ namespace RS3Bot.Cli.Widget
         private static readonly int XSpacing = 153;
         private readonly IItemImageGrabber _imageGrabber;
         private readonly PrivateFontCollection _fontCollection;
+        private static readonly int MaxItemChar = 12;
 
         public class ShopWidgetOptions
         {
@@ -33,6 +35,12 @@ namespace RS3Bot.Cli.Widget
             _imageGrabber = imageGrabber;
             _fontCollection = fontCollection;
         }
+        static IEnumerable<string> Split(string str, int chunkSize)
+        {
+            return Enumerable.Range(0, str.Length / chunkSize)
+                .Select(i => str.Substring(i * chunkSize, chunkSize));
+        }
+
 
         public async Task<Stream> GetWidgetAsync(ShopWidgetOptions lootWidgetOptions)
         {
@@ -40,7 +48,6 @@ namespace RS3Bot.Cli.Widget
             using (var headerImage = Image.FromStream(headerStream))
             using (var footerStream = ResourceExtensions.GetStreamCopy(typeof(CliParser), "RS3Bot.Cli.Images.Shop_Footer.png"))
             using (var footerImage = Image.FromStream(footerStream))
-            using(var stringFormat = new StringFormat { FormatFlags = StringFormatFlags.NoWrap })
             {
                 var rowAmount = (int)Math.Ceiling(lootWidgetOptions.Items.Count / (double)MaxRowSize);
                 var headerHeight = headerImage.Height;
@@ -54,7 +61,7 @@ namespace RS3Bot.Cli.Widget
                 using (Graphics g = Graphics.FromImage(lootImage))
                 {
                     g.DrawImage(headerImage, 0, 0);
-                    g.DrawString(lootWidgetOptions.Title, font, Brushes.Gold, 26, 12, stringFormat);
+                    g.DrawString(lootWidgetOptions.Title, font, Brushes.Gold, 26, 12);
                     for (int i = 0; i < lootWidgetOptions.Items.Count; i++)
                     {
                         var row = (int)Math.Floor(i / (double)MaxRowSize);
@@ -72,6 +79,7 @@ namespace RS3Bot.Cli.Widget
                         using (SolidBrush drawBrush = new SolidBrush(StackFormatter.GetColor(item.Item.Amount)))
                         {
                             var itemName = ItemDefinition.GetItemName(item.Item.ItemId);
+                            var itemNameLines = Split(itemName, MaxItemChar);
                             var horizontalCenter = itemY + ((32 - imageStream.Height) / 2);
                             var verticalCenter = itemX + ((32 - imageStream.Width) / 2);
 
@@ -82,13 +90,13 @@ namespace RS3Bot.Cli.Widget
                                             itemY - 4);
 
                             g.DrawString(itemName, font, Brushes.White,
-                                           itemX + 34,
-                                           itemY - 4);
+                                           new RectangleF(new PointF(itemX + 34f, itemY - 0f), new SizeF(95, 36)));
+
 
                             var amountStr = StackFormatter.QuantityToRSStackSize(item.Price);
                             var amountMeasure = g.MeasureString(amountStr, font);
                             g.DrawString(amountStr, font, Brushes.White,
-                                           itemX + 113 - (amountMeasure.Width/2),
+                                           itemX + 113 - (amountMeasure.Width / 2),
                                            itemY + 26);
 
                         }
