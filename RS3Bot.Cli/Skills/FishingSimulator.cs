@@ -52,11 +52,16 @@ namespace RS3Bot.Cli.Skills
             }
 
             var end = DateTime.Now.Add(duration);
+
+            var elapsed = end.Subtract(DateTime.Now);
+            var taskName = $"{user.Mention} begins to {fishingEmote} Fish {option.Amount} x {args.Name} for {elapsed.Hours}h {elapsed.Minutes}m {elapsed.Seconds}s!";
+            await message.Channel.SendMessageAsync(taskName);
             return new CurrentTask
             {
                 ChannelId = message.Channel.Id,
                 UnlockTime = end,
-                TaskName = $"{fishingEmote} Fish {option.Amount} x {args.Name}",
+                TaskName = taskName,
+                MessageId = message.Id,
                 ExpGains = new List<ExpGain>() { new ExpGain { Skill = Skill.Fishing, Amount = option.Amount.Value * args.Xp } },
                 Items = new List<TaskItem>() { new TaskItem { Item = new Item { ItemId = args.Id, Amount = (ulong)option.Amount } } },
                 CompletionMessage = $"{user.Mention} has finished fishing {option.Amount} x {args.Name}, you also received: \n {{0}}"

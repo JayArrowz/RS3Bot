@@ -18,11 +18,13 @@ namespace RS3Bot.Abstractions
     {
         private readonly IContextFactory _contextFactory;
         private readonly IDiscordBot _discordBot;
+        private readonly IReplyAwaiter _replyAwaiter;
         private bool _quit;
-        public TaskHandler(IContextFactory contextFactory, IDiscordBot discordBot)
+        public TaskHandler(IContextFactory contextFactory, IDiscordBot discordBot, IReplyAwaiter replyAwaiter)
         {
             _contextFactory = contextFactory;
             _discordBot = discordBot;
+            _replyAwaiter = replyAwaiter;
         }
 
         public void Dispose()
@@ -91,8 +93,12 @@ namespace RS3Bot.Abstractions
                                     }
                                 }
                             }
+
+                            var repeatReply = _replyAwaiter.CreateReply(task);
                             var channel = _discordBot.Client.GetChannel(task.ChannelId) as IMessageChannel;
                             var xpStr = string.Join('\n', task.ExpGains.Select(xpGain => $"{_discordBot.GetEmote(Skill.GetName(xpGain.Skill))} +{xpGain.Amount} XP Gained, Level: {user.SkillSet.GetLevel(xpGain.Skill)}, Total XP: {user.SkillSet.GetExp(xpGain.Skill)}"));
+                            xpStr += $"\n Press `+{repeatReply.ConfirmChar}` to repeat";
+                            await _replyAwaiter.Add(repeatReply);
                             await channel.SendMessageAsync(string.Format(task.CompletionMessage, xpStr));
 
                             context.RemoveRange(task.Items);

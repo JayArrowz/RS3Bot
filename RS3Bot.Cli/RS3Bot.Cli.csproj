@@ -62,6 +62,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
     <PackageReference Include="SixLabors.Fonts" Version="1.0.0-beta0013" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
+    <PackageReference Include="System.Runtime.Caching" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>

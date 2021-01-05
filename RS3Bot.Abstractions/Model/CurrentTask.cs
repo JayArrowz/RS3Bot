@@ -17,5 +17,21 @@ namespace RS3Bot.Abstractions.Model
         public string CompletionMessage { get; set; }
         public virtual ICollection<ExpGain> ExpGains { get; set; }
         public virtual ICollection<TaskItem> Items { get; set; } 
+        public ulong MessageId { get; set; }
+        public string Command { get; set; }
+
+        public CurrentTask Copy(CurrentTask task)
+        {
+            UnlockTime = task.UnlockTime;
+            TaskName = task.TaskName;
+            ChannelId = task.ChannelId;
+            Notified = task.Notified;
+            ExpGains = task.ExpGains;
+            MessageId = task.MessageId;
+            CompletionMessage = task.CompletionMessage;
+            Items = task.Items;
+            Command = task.Command;
+            return this;
+        }
     }
 }

@@ -5,20 +5,47 @@
     "Id": 317,
     "TimePerFish": 3.6,
     "Name": "Shrimp",
-    "OtherNames": [ "Shrimps", "Shrim", "Shri" ]
+    "OtherNames": [ "Shrimps", "Shrim", "Shri" ],
+    "ItemsRequired": [
+      {
+        "ItemId": 303,
+        "Amount": 1
+      }
+    ]
   },
   {
-    "Level": 10,
-    "Xp": 20,
+    "Level": 1,
+    "Xp": 10,
+    "Id": 13435,
+    "TimePerFish": 3.6,
+    "Name": "Crayfish",
+    "OtherNames": [ "Cray", "Crays" ],
+    "ItemsRequired": [
+      {
+        "ItemId": 13431,
+        "Amount": 1
+      }
+    ]
+  },
+  {
+    "Level": 5,
+    "Xp": 10,
     "Name": "Karambwanji",
     "TimePerFish": 3.6,
     "Id": 3142,
+    "ItemsRequired": [
+      {
+        "ItemId": 303,
+        "Amount": 1
+      }
+    ],
     "OtherNames": [ "Kara", "Karam", "Karambwa" ]
   },
   {
     "Level": 50,
     "Xp": 50,
     "Name": "Swordfish",
+    "OtherNames": [ "Sword", "Swordies" ],
     "TimePerFish": 11,
     "Id": 371
   }

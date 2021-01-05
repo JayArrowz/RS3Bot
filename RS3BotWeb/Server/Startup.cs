@@ -68,6 +68,7 @@ namespace RS3BotWeb.Server
             builder.RegisterType<ItemImageGrabber>().As<IItemImageGrabber>().SingleInstance();
             builder.RegisterType<BankWidget>().As< IWidget<BankWidgetOptions>>().SingleInstance();
             builder.RegisterType<LootWidget>().As< IWidget<LootWidgetOptions>>().SingleInstance();
+            builder.RegisterType<ReplyAwaiter>().As<IReplyAwaiter>().SingleInstance();
             builder.RegisterType<EquipmentWidget>().As< IWidget<EquipmentWidgetOptions>>().SingleInstance();
         }
 
@@ -80,6 +81,7 @@ namespace RS3BotWeb.Server
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddMemoryCache();
 
             services.AddAuthentication();
             services.AddIdentity<ApplicationUser, IdentityRole<string>>()

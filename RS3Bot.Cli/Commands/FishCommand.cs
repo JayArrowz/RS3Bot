@@ -1,4 +1,5 @@
-﻿using Discord.WebSocket;
+﻿using CommandLine;
+using Discord.WebSocket;
 using RS3Bot.Abstractions.Extensions;
 using RS3Bot.Abstractions.Interfaces;
 using RS3Bot.Abstractions.Model;
@@ -36,14 +37,9 @@ namespace RS3Bot.Cli.Commands
                 return true;
             }
 
-            user.CurrentTask.UnlockTime = simulation.UnlockTime;
-            user.CurrentTask.TaskName = simulation.TaskName;
-            user.CurrentTask.ChannelId = simulation.ChannelId;
-            user.CurrentTask.Notified = false;
-            user.CurrentTask.ExpGains = simulation.ExpGains;
-            user.CurrentTask.CompletionMessage = simulation.CompletionMessage;
-            user.CurrentTask.Items = simulation.Items;
-
+            simulation.Notified = false;
+            user.CurrentTask.Copy(simulation);
+            user.CurrentTask.Command = Parser.Default.FormatCommandLine(option);
             if (user.CurrentTask.ExpGains != null && user.CurrentTask.ExpGains.Any())
             {
                 foreach (var expGains in user.CurrentTask.ExpGains)
@@ -63,8 +59,6 @@ namespace RS3Bot.Cli.Commands
             }
             context.Update(user.CurrentTask);
             SaveChanges = true;
-            var elapsed = user.CurrentTask.UnlockTime.Value.Subtract(DateTime.Now);
-            await message.Channel.SendMessageAsync($"{user.Mention} begins to {user.CurrentTask.TaskName} for {elapsed.Hours}h {elapsed.Minutes}m {elapsed.Seconds}s!");
             return true;
         }
     }
