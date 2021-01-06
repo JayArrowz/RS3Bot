@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace RS3Bot.Cli.Commands
 {
-    public class FishCommand : UserAwareCommand<FishOption>
+    public class SkillCommand : UserAwareCommand<SkillOption>
     {
-        private readonly ISimulator<FishOption> _fishingSimulator;
+        private readonly ISimulator<SkillOption> _skillSimulator;
 
-        public FishCommand(IContextFactory factory, ISimulator<FishOption> fishingSimulator) : base(factory)
+        public SkillCommand(IContextFactory factory, ISimulator<SkillOption> fishingSimulator) : base(factory)
         {
-            _fishingSimulator = fishingSimulator;
+            _skillSimulator = fishingSimulator;
         }
 
-        protected override async Task<bool> ExecuteCommand(IDiscordBot bot, SocketMessage message, ApplicationUser user, ApplicationDbContext context, FishOption option)
+        protected override async Task<bool> ExecuteCommand(IDiscordBot bot, SocketMessage message, ApplicationUser user, ApplicationDbContext context, SkillOption option)
         {
             if (user.CurrentTask != null && !user.CurrentTask.Notified)
             {
@@ -28,9 +28,7 @@ namespace RS3Bot.Cli.Commands
                 return true;
             }
 
-
-            var emote = bot.GetEmote("Fishing");
-            var simulation = await _fishingSimulator.SimulateTask(bot, user, message, option);
+            var simulation = await _skillSimulator.SimulateTask(bot, user, message, option);
 
             if (simulation == null)
             {

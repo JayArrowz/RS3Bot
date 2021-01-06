@@ -1,0 +1,129 @@
+﻿[
+  {
+    "Level": 1,
+    "Xp": 10,
+    "ItemsGained": [
+      {
+        "ItemId": 317,
+        "Amount": 1
+      }
+    ],
+    "TimeTakenMillis": 3600,
+    "Skill": "Fishing",
+    "Name": "Shrimp",
+    "Action": "Fish",
+    "OtherNames": [ "Shrimps", "Shrim", "Shri" ],
+    "ItemsRequired": [
+      {
+        "Item": {
+          "ItemId": 303,
+          "Amount": 1
+        }
+      }
+    ]
+  },
+  {
+    "Level": 1,
+    "Xp": 10,
+    "ItemsGained": [
+      {
+        "ItemId": 13435,
+        "Amount": 1
+      }
+    ],
+    "Skill": "Fishing",
+    "TimeTakenMillis": 3600,
+    "Name": "Crayfish",
+    "Action": "Fish",
+    "OtherNames": [ "Cray", "Crays" ],
+    "ItemsRequired": [
+      {
+        "Item": {
+          "ItemId": 13431,
+          "Amount": 1
+        }
+      }
+    ]
+  },
+  {
+    "Level": 5,
+    "Xp": 10,
+    "Name": "Karambwanji",
+    "Skill": "Fishing",
+    "Action": "Fish",
+    "TimeTakenMillis": 3600,
+    "ItemsGained": [
+      {
+        "ItemId": 3142,
+        "Amount": 1
+      }
+    ],
+    "ItemsRequired": [
+      {
+        "Item": {
+          "ItemId": 303,
+          "Amount": 1
+        }
+      }
+    ],
+    "OtherNames": [ "Kara", "Karam", "Karambwa" ]
+  },
+  {
+    "Level": 50,
+    "Xp": 50,
+    "Name": "Swordfish",
+    "Action": "Fish",
+    "Skill": "Fishing",
+    "OtherNames": [ "Sword", "Swordies" ],
+    "TimeTakenMillis": 11000,
+    "ItemsGained": [
+      {
+        "ItemId": 371,
+        "Amount": 1
+      }
+    ]
+  },
+  {
+    "Level": 1,
+    "Xp": 25,
+    "TimeTakenMillis": 600,
+    "Skill": "Woodcutting",
+    "Name": "Logs",
+    "Action": "Cut",
+    "ItemsGained": [
+      {
+        "ItemId": 1511,
+        "Amount": 1
+      }
+    ]
+  },
+  {
+    "Level": 1,
+    "Xp": 40,
+    "TimeTakenMillis": 1000,
+    "Skill": "Firemaking",
+    "Name": "Logs",
+    "Action": "Burn",
+    "ItemsRequired": [
+      {
+        "Item": {
+          "ItemId": 590,
+          "Amount": 1
+        }
+      },
+      {
+        "Delete": true,
+        "Item": {
+          "ItemId": 1511,
+          "Amount": 1
+        }
+      }
+    ],
+    "ItemsGained": [
+      {
+        "ItemId": 592,
+        "Amount": 1
+      }
+    ]
+  }
+]

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace RS3Bot.Abstractions.Model
 {
@@ -37,6 +39,11 @@ namespace RS3Bot.Abstractions.Model
 		 */
         public static readonly int Prayer = 5;
 
+        public static bool IsSkill(string skillName)
+        {
+            return SkillNames.Any(t => t.Contains(skillName, StringComparison.InvariantCultureIgnoreCase));
+        }
+
         /**
 		 * The magic id.
 		 */
@@ -71,6 +78,16 @@ namespace RS3Bot.Abstractions.Model
 		 * The crafting id.
 		 */
         public static readonly int Crafting = 12;
+
+        public static int GetId(string skill)
+        {
+            var str = SkillNames.FirstOrDefault(t => t.Contains(skill, StringComparison.InvariantCultureIgnoreCase));
+            if(string.IsNullOrEmpty(str))
+            {
+                return -1;
+            }
+            return Array.IndexOf(SkillNames, str);
+        }
 
         /**
 		 * The smithing id.
@@ -115,9 +132,14 @@ namespace RS3Bot.Abstractions.Model
         /**
 		 * The skill names.
 		 */
-        private static readonly string[] SkillNames = { "Attack", "Defence", "Strength", "Constitution", "Ranged", "Prayer",
+        public static readonly string[] SkillNames = { "Attack", "Defence", "Strength", "Constitution", "Ranged", "Prayer",
             "Magic", "Cooking", "Woodcutting", "Fletching", "Fishing", "Firemaking", "Crafting", "Smithing", "Mining",
             "Herblore", "Agility", "Thieving", "Slayer", "Farming", "Runecraft" };
+
+        public static string GetNames()
+        {
+            return string.Join(", ", SkillNames);
+        }
 
         /**
          * Gets the name of a skill.

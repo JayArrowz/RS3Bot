@@ -390,6 +390,11 @@ namespace RS3Bot.Abstractions.Model
             return Remove(id, 1) == 1;
         }
 
+        public bool RemoveItem(Item id)
+        {
+            return Remove(id.ItemId, id.Amount) == id.Amount;
+        }
+
         /**
 		 * Removes one item with each of the specified ids.
 		 * <p>

@@ -19,7 +19,6 @@ using System.Drawing.Text;
 using System.IO;
 using System;
 using RS3Bot.Abstractions.Extensions;
-using RS3Bot.Abstractions.Interfaces;
 using static RS3Bot.Cli.Widget.BankWidget;
 using RS3Bot.Cli.Widget;
 using static RS3Bot.Cli.Widget.LootWidget;
@@ -58,14 +57,14 @@ namespace RS3BotWeb.Server
             builder.RegisterType<GpCommand>().As<ICommand>();
             builder.RegisterType<StatusCommand>().As<ICommand>();
             builder.RegisterType<GearCommand>().As<ICommand>();
-            builder.RegisterType<FishCommand>().As<ICommand>();
+            builder.RegisterType<SkillCommand>().As<ICommand>();
             builder.RegisterType<BankCommand>().As<ICommand>();
             builder.RegisterType<ShopViewCommand>().As<ICommand>();
             builder.RegisterType<ShopBuyCommand>().As<ICommand>();
             builder.RegisterType<DbContextFactory>().As<IContextFactory>().SingleInstance();
             builder.RegisterType<TaskHandler>().As<ITaskHandler>().As<IStartable>().SingleInstance();
 
-            builder.RegisterType<FishingSimulator>().As<ISimulator<FishOption>>().As<IStartable>().SingleInstance();
+            builder.RegisterType<SkillSimulator>().As<ISimulator<SkillOption>>().As<IStartable>().SingleInstance();
             builder.RegisterType<ShopManager>().AsSelf().As<IStartable>().SingleInstance();
 
             builder.RegisterType<DiscordBot>().As<IDiscordBot>().SingleInstance();

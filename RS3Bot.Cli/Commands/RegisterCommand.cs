@@ -43,11 +43,10 @@ namespace RS3Bot.Cli.Commands
                         CurrentTask = new CurrentTask { Notified = true, UserId = userId.ToString(), UnlockTime = DateTime.MinValue },
                         Mention = message.Author.Mention
                     };
-
                     dbContext.Add(applicationUser);
 
                     await dbContext.SaveChangesAsync();
-                    await message.Channel.SendMessageAsync($"{message.Author.Username} has registered their user. Type +m for help.");
+                    await message.Channel.SendMessageAsync($"{message.Author.Username} has registered their user. Type +help for commands. Each command has a --help switch .e.g. +buy --help.");
                 }
             }
             return true;

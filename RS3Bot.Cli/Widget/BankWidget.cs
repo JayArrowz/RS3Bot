@@ -63,7 +63,7 @@ namespace RS3Bot.Cli.Widget
                                     {
                                         var row = (int)Math.Floor(amountCount / (double)maxItemsPerRow);
                                         var itemX = 18 + ((amountCount % maxItemsPerRow) * 45);
-                                        int itemY = 55 + (row * 36);
+                                        int itemY = 55 + (row * 40);
 
                                         var horizontalCenter = itemY + ((maxItemSquareSize - imageStream.Height) / 2);
                                         var verticalCenter = itemX + ((maxItemSquareSize - imageStream.Width) / 2);
