@@ -45,13 +45,6 @@ namespace RS3Bot.Cli
                 return false;
             }
 
-            var amount = (ulong)option.Amount;
-            if (amount <= 0)
-            {
-                await message.Channel.SendMessageAsync($"Invalid amount {amount}");
-                return false;
-            }
-
             var isIntegerItem = int.TryParse(option.ItemNameOrId, out var itemId);
             ShopItem shopItem = null;
             if (isIntegerItem)
@@ -72,22 +65,25 @@ namespace RS3Bot.Cli
 
             var currencyAmount = user.Bank.GetAmount(shop.Currency);
             var currencyName = ItemDefinition.GetItemName(shop.Currency);
-            var maxAmountCanBuy = (ulong)Math.Floor(currencyAmount / (double)shopItem.Price);
-            if (maxAmountCanBuy == 0)
-            {
-                await message.Channel.SendMessageAsync($"You do not have enough {currencyName} to buy this item.");
-                return false;
-            }
-
+           
+            var amount = ((ulong?) option.Amount) ?? shopItem.Item.Amount;
             amount = Math.Min(shopItem.Item.Amount, amount);
-            amount = Math.Min(maxAmountCanBuy, amount);
 
             var itemName = ItemDefinition.GetItemName(shopItem.Item.ItemId);
             var totalPrice = amount * (ulong)shopItem.Price;
 
+            var maxAmountCanBuy = (ulong)Math.Floor(currencyAmount / (double)shopItem.Price);
+            if (maxAmountCanBuy == 0)
+            {
+                await message.Channel.SendMessageAsync($"You do not have enough {currencyName} to buy {amount} x {itemName}. You need {(totalPrice - currencyAmount)} more {currencyName}.");
+                return false;
+            }
+
+            amount = Math.Min(maxAmountCanBuy, amount);
+
             if (option.Confirm.GetValueOrDefault())
             {
-                await message.Channel.SendMessageAsync($"{user.Mention} buys {amount} x {itemName} for {totalPrice} coins.");
+                await message.Channel.SendMessageAsync($"{user.Mention} buys {amount} x {itemName} for {totalPrice} {currencyName}.");
 
                 user.Bank.Remove(shop.Currency, totalPrice);
                 user.Bank.Add(shopItem.Item.ItemId, amount);
@@ -102,7 +98,7 @@ namespace RS3Bot.Cli
                     User = user,
                     Command = $"{Parser.Default.FormatCommandLine(option)} --confirm=true"
                 });
-                await message.Channel.SendMessageAsync($"Press `+{reply.ConfirmChar}` to confirm buying {itemName} x {amount} for {totalPrice} {currencyName}{(totalPrice > 0 ? "'s" : "")}.");
+                await message.Channel.SendMessageAsync($"Press `+{reply.ConfirmChar}` to confirm buying {itemName} x {amount} for {totalPrice} {currencyName}.");
                 await _replyAwaiter.Add(reply);
             }
             return true;
