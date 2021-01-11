@@ -15,9 +15,9 @@ namespace RS3Bot.Cli.Commands.Impl
     {
         private readonly ISimulator<SkillOption> _skillSimulator;
 
-        public SkillCommand(IContextFactory factory, ISimulator<SkillOption> fishingSimulator) : base(factory)
+        public SkillCommand(IContextFactory factory, ISimulator<SkillOption> skillSimulator) : base(factory)
         {
-            _skillSimulator = fishingSimulator;
+            _skillSimulator = skillSimulator;
         }
 
         protected override async Task<bool> ExecuteCommand(IDiscordBot bot, SocketMessage message, ApplicationUser user, ApplicationDbContext context, SkillOption option)
