@@ -25,6 +25,12 @@ To Run in Terminal:
 dotnet run --project RS3Bot.Cli
 ```
 
+## Images
+![alt text](https://i.imgur.com/JDvYw0z.png)
+![alt text](https://i.imgur.com/sSi7MXE.png)
+![alt text](https://i.imgur.com/AAHRsJx.png)
+![alt text](https://i.imgur.com/zLiAtHX.png)
+
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
