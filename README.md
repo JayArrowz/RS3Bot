@@ -11,7 +11,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 
 ### Installing
-1. Go to [appsettings.json](https://github.com/JayArrowz/NetScape/blob/master/NetScape/appsettings.json) and ensure the ConnectionString to your database is correct
+1. Go to [appsettings.json](https://github.com/JayArrowz/RS3Bot/blob/main/RS3Bot.Cli/appsettings.json) and ensure the ConnectionString to your database is correct
 2. Ensure your Discord bot API key is correct
 3. Go to your Terminal (Make sure its current directory is matching the root of this repo) or VS Console then type, this will scaffold the DB on postgres:
 ```
