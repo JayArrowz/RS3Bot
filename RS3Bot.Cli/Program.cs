@@ -32,19 +32,19 @@ namespace RS3Bot.Cli
             var builder = new ContainerBuilder();
             startup.ConfigureContainer(builder);
             builder.RegisterInstance(config).As<IConfiguration>().As<IConfigurationRoot>();
-
             // Populate the service-descriptors added to `IServiceCollection`
             // BEFORE you add things to Autofac so that the Autofac
             // registrations can override stuff in the `IServiceCollection`
             // as needed
             builder.Populate(services);
+
             using (var container = builder.Build())
             {
                 using (var lifetimeScope = container.BeginLifetimeScope())
                 {
                     var discordBot = container.Resolve<IDiscordBot>();
                     await discordBot.LoginAsync(config.GetConnectionString("DiscordApiKey"));
-                    Serilog.Log.Logger.Information("Started RS3 Bot");
+                    Serilog.Log.Logger.Information("RS3 Bot Started");
                     //TODO Better way
                     await Task.Delay(-1);
                 }

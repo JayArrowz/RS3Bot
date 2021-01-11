@@ -15,8 +15,10 @@ using RS3Bot.Cli.Skills;
 using RS3Bot.Cli.Widget;
 using RS3Bot.DAL;
 using RS3BotWeb.Shared;
+using Serilog;
 using System;
 using System.Drawing.Text;
+using System.Reflection;
 using static RS3Bot.Cli.Widget.BankWidget;
 using static RS3Bot.Cli.Widget.EquipmentWidget;
 using static RS3Bot.Cli.Widget.LootWidget;
@@ -42,7 +44,7 @@ namespace RS3BotWeb.Cli
         // Don't build the container; that gets done for you by the factory.
         public void ConfigureContainer(ContainerBuilder builder)
         {
-
+            ConfigureLogger(builder);
             builder.RegisterType<RegisterCommand>().As<ICommand>();
             builder.RegisterType<DiceCommand>().As<ICommand>();
             builder.RegisterType<StatsCommand>().As<ICommand>();
@@ -68,6 +70,18 @@ namespace RS3BotWeb.Cli
             builder.RegisterType<ReplyAwaiter>().As<IReplyAwaiter>().SingleInstance();
             builder.RegisterType<EquipmentWidget>().As<IWidget<EquipmentWidgetOptions>>().SingleInstance();
         }
+
+        private void ConfigureLogger(ContainerBuilder builder)
+        {
+            var loggerConfig = new LoggerConfiguration()
+                .ReadFrom.Configuration(Configuration);
+
+            var logger = loggerConfig.CreateLogger()
+                .ForContext(MethodBase.GetCurrentMethod().DeclaringType);
+            Log.Logger = logger;
+            builder.RegisterInstance(logger).As<ILogger>();
+        }
+
         private void AddRsFonts(IServiceCollection services)
         {
             _fontCollection = new PrivateFontCollection();
