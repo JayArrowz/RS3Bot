@@ -1,5 +1,5 @@
 # RS3 Bot
-Play RS3 On Discord!
+Play RS3 On Discord! A work in progress still.
 
 ## Getting Started
 
