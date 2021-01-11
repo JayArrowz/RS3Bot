@@ -37,9 +37,9 @@ namespace RS3Bot.Cli.Widget
 
         public async Task<Stream> GetWidgetAsync(LootWidgetOptions lootWidgetOptions)
         {
-            var headerStream = ResourceExtensions.GetStreamCopy(typeof(CliParser), "RS3Bot.Cli.Images.Loot_Head.png");
+            var headerStream = ResourceExtensions.GetStreamCopy(typeof(Program), "RS3Bot.Cli.Images.Loot_Head.png");
             using (var headerImage = Image.FromStream(headerStream))
-            using (var footerStream = ResourceExtensions.GetStreamCopy(typeof(CliParser), "RS3Bot.Cli.Images.Loot_Footer.png"))
+            using (var footerStream = ResourceExtensions.GetStreamCopy(typeof(Program), "RS3Bot.Cli.Images.Loot_Footer.png"))
             using (var footerImage = Image.FromStream(footerStream))
             {
                 var rowAmount = (int)Math.Ceiling(lootWidgetOptions.Items.Count / (double)MaxRowSize);
@@ -47,7 +47,7 @@ namespace RS3Bot.Cli.Widget
                 using (var lootImage = new Bitmap(headerImage.Width, headerHeight + (rowAmount * RowHeight) + FooterHeight))
                 using (var font = new Font(_fontCollection.Families[0], 8))
                 using (var titleFont = new Font(_fontCollection.Families[0], 12))
-                using (var rowStream = ResourceExtensions.GetStreamCopy(typeof(CliParser), "RS3Bot.Cli.Images.Loot_Row.png"))
+                using (var rowStream = ResourceExtensions.GetStreamCopy(typeof(Program), "RS3Bot.Cli.Images.Loot_Row.png"))
                 using (var rowImage = Image.FromStream(rowStream))
                 using (Graphics g = Graphics.FromImage(lootImage))
                 {

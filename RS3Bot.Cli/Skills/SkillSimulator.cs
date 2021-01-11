@@ -81,7 +81,7 @@ namespace RS3Bot.Cli.Skills
                     .ForEach(item =>
                     {
                         user.Bank.RemoveItem(new Item(item.Item.ItemId, (ulong)option.Amount));
-                        user.Bank.Update();
+                        user.Bank.UpdateRequired = true;
                     });
             }
             var taskDesc = $"{user.Mention} begins to {emote} {skillData.Action.ToLower()} {option.Amount} x {skillData.Name} for {elapsed.Hours}h {elapsed.Minutes}m {elapsed.Seconds}s!";

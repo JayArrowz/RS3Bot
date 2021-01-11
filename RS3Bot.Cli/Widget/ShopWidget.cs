@@ -44,17 +44,17 @@ namespace RS3Bot.Cli.Widget
 
         public async Task<Stream> GetWidgetAsync(ShopWidgetOptions lootWidgetOptions)
         {
-            var headerStream = ResourceExtensions.GetStreamCopy(typeof(CliParser), "RS3Bot.Cli.Images.Shop_Header.png");
+            var headerStream = ResourceExtensions.GetStreamCopy(typeof(Program), "RS3Bot.Cli.Images.Shop_Header.png");
             using (var headerImage = Image.FromStream(headerStream))
-            using (var footerStream = ResourceExtensions.GetStreamCopy(typeof(CliParser), "RS3Bot.Cli.Images.Shop_Footer.png"))
+            using (var footerStream = ResourceExtensions.GetStreamCopy(typeof(Program), "RS3Bot.Cli.Images.Shop_Footer.png"))
             using (var footerImage = Image.FromStream(footerStream))
             {
                 var rowAmount = (int)Math.Ceiling(lootWidgetOptions.Items.Count / (double)MaxRowSize);
                 var headerHeight = headerImage.Height;
                 using (var lootImage = new Bitmap(headerImage.Width, headerHeight + (rowAmount * YSpacing) + FooterHeight))
                 using (var font = new Font(_fontCollection.Families[0], 8))
-                using (var shopItem = ResourceExtensions.GetStreamCopy(typeof(CliParser), "RS3Bot.Cli.Images.Shop_Item.png"))
-                using (var rowStream = ResourceExtensions.GetStreamCopy(typeof(CliParser), "RS3Bot.Cli.Images.Shop_Row.png"))
+                using (var shopItem = ResourceExtensions.GetStreamCopy(typeof(Program), "RS3Bot.Cli.Images.Shop_Item.png"))
+                using (var rowStream = ResourceExtensions.GetStreamCopy(typeof(Program), "RS3Bot.Cli.Images.Shop_Row.png"))
                 using (var rowImage = Image.FromStream(rowStream))
                 using (var shopItemImage = Image.FromStream(shopItem))
                 using (var titleFont = new Font(_fontCollection.Families[0], 40))

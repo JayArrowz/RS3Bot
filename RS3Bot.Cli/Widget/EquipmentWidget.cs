@@ -43,7 +43,7 @@ namespace RS3Bot.Cli.Widget
             var amuletId = args.Items.FirstOrDefault(t => t.EquipmentSlot == EquipmentConstants.Amulet);
             var weaponId = args.Items.FirstOrDefault(t => t.EquipmentSlot == EquipmentConstants.Weapon);
 
-            var equipmentBgStream = ResourceExtensions.GetStreamCopy(typeof(CliParser), "RS3Bot.Cli.Images.Equipment.png");
+            var equipmentBgStream = ResourceExtensions.GetStreamCopy(typeof(Program), "RS3Bot.Cli.Images.Equipment.png");
             using (var equipmentImage = Image.FromStream(equipmentBgStream))
             using (var bitmap = new Bitmap(equipmentImage))
             using (Graphics g = Graphics.FromImage(bitmap))

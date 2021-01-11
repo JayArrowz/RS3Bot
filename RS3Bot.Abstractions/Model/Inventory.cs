@@ -94,11 +94,6 @@ namespace RS3Bot.Abstractions.Model
             _items = new Item[capacity];
         }
 
-        public void Update()
-        {
-            UpdateRequired = true;
-        }
-
         /**
 		 * An alias for {@code add(id, 1)}.
 		 *

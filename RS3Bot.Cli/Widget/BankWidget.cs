@@ -33,7 +33,7 @@ namespace RS3Bot.Cli.Widget
 
         public async Task<Stream> GetWidgetAsync(BankWidgetOptions bankWidgetOptions)
         {
-            var memoryStream = ResourceExtensions.GetStreamCopy(typeof(CliParser), "RS3Bot.Cli.Images.Bank_Interface.png");
+            var memoryStream = ResourceExtensions.GetStreamCopy(typeof(Program), "RS3Bot.Cli.Images.Bank_Interface.png");
             using (var backInterface = new Bitmap(Image.FromStream(memoryStream)))
             {
                 var bankInterfaceHeight = backInterface.Height;

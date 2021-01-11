@@ -99,6 +99,14 @@
   },
   {
     "Level": 1,
+    "Xp": 25,
+    "TimeTakenMillis": 1000,
+    "Skill": "Attack",
+    "Name": "Dummy",
+    "Action": "Attack"
+  },
+  {
+    "Level": 1,
     "Xp": 40,
     "TimeTakenMillis": 1000,
     "Skill": "Firemaking",

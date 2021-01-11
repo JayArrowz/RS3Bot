@@ -5,6 +5,7 @@ using RS3Bot.Abstractions.Extensions;
 using RS3Bot.Abstractions.Interfaces;
 using RS3Bot.Abstractions.Model;
 using RS3Bot.Cli;
+using RS3Bot.Cli.Items;
 using RS3Bot.DAL;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RS3Bot.Abstractions
+namespace RS3Bot.Cli
 {
     public class TaskHandler : ITaskHandler
     {

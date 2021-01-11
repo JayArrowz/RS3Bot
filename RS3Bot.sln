@@ -3,19 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RS3BotWeb.Server", "RS3BotWeb\Server\RS3BotWeb.Server.csproj", "{29E2FB13-849A-45D6-BBB6-81823A032B08}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RS3BotWeb.Client", "RS3BotWeb\Client\RS3BotWeb.Client.csproj", "{2857868E-CDEA-4EF9-8E57-DB79230CAFD3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RS3BotWeb.Shared", "RS3BotWeb\Shared\RS3BotWeb.Shared.csproj", "{6C2AC646-5037-4BAB-9E83-D0FF65F1D75B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RS3Bot.Discord", "RS3Bot.Discord\RS3Bot.Discord.csproj", "{C07112D9-D66E-40E6-AD12-8D1095633F36}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RS3Bot.Cli", "RS3Bot.Cli\RS3Bot.Cli.csproj", "{CDADD5EF-006C-4E6D-8C25-E7B65A9C7C36}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RS3Bot.DAL", "RS3Bot.DAL\RS3Bot.DAL.csproj", "{84E4E75B-1F1B-46D5-8DE6-32A349D0646D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RS3Bot.Abstractions", "RS3Bot.Abstractions\RS3Bot.Abstractions.csproj", "{E6DCB86E-7176-4449-9A8B-4018C45B6E8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RS3Bot.Abstractions", "RS3Bot.Abstractions\RS3Bot.Abstractions.csproj", "{E6DCB86E-7176-4449-9A8B-4018C45B6E8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,22 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{29E2FB13-849A-45D6-BBB6-81823A032B08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29E2FB13-849A-45D6-BBB6-81823A032B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29E2FB13-849A-45D6-BBB6-81823A032B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29E2FB13-849A-45D6-BBB6-81823A032B08}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2857868E-CDEA-4EF9-8E57-DB79230CAFD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2857868E-CDEA-4EF9-8E57-DB79230CAFD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2857868E-CDEA-4EF9-8E57-DB79230CAFD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2857868E-CDEA-4EF9-8E57-DB79230CAFD3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6C2AC646-5037-4BAB-9E83-D0FF65F1D75B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C2AC646-5037-4BAB-9E83-D0FF65F1D75B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C2AC646-5037-4BAB-9E83-D0FF65F1D75B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C2AC646-5037-4BAB-9E83-D0FF65F1D75B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C07112D9-D66E-40E6-AD12-8D1095633F36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C07112D9-D66E-40E6-AD12-8D1095633F36}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C07112D9-D66E-40E6-AD12-8D1095633F36}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C07112D9-D66E-40E6-AD12-8D1095633F36}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CDADD5EF-006C-4E6D-8C25-E7B65A9C7C36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CDADD5EF-006C-4E6D-8C25-E7B65A9C7C36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDADD5EF-006C-4E6D-8C25-E7B65A9C7C36}.Release|Any CPU.ActiveCfg = Release|Any CPU
