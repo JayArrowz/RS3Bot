@@ -44,6 +44,9 @@ namespace RS3Bot.Cli
                 {
                     var discordBot = container.Resolve<IDiscordBot>();
                     await discordBot.LoginAsync(config.GetConnectionString("DiscordApiKey"));
+                    Serilog.Log.Logger.Information("Started RS3 Bot");
+                    //TODO Better way
+                    await Task.Delay(-1);
                 }
             }
         }
