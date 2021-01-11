@@ -1,7 +1,7 @@
 ﻿using RS3Bot.Abstractions.Extensions;
 using RS3Bot.Abstractions.Interfaces;
 using RS3Bot.Abstractions.Model;
-using RS3Bot.Cli.Options;
+using RS3Bot.Cli.Commands.Options;
 using RS3BotWeb.Shared;
 using System;
 using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿using CommandLine;
 using RS3Bot.Abstractions.Interfaces;
 
-namespace RS3Bot.Cli.Options
+namespace RS3Bot.Cli.Commands.Options
 {
     [Verb("shop", HelpText = "View items in shop")]
     public class ShopViewOption : IOptionsBase

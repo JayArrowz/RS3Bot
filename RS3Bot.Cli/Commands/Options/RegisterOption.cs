@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RS3Bot.Cli.Options
+namespace RS3Bot.Cli.Commands.Options
 {
     [Verb("register", HelpText = "Register an account")]
     public class RegisterOption : IOptionsBase

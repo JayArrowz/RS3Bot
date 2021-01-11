@@ -10,7 +10,7 @@ using RS3Bot.Abstractions.Model;
 using RS3Bot.Cli;
 using RS3Bot.Cli.Commands;
 using RS3Bot.Cli.Commands.Impl;
-using RS3Bot.Cli.Options;
+using RS3Bot.Cli.Commands.Options;
 using RS3Bot.Cli.Skills;
 using RS3Bot.Cli.Widget;
 using RS3Bot.DAL;

@@ -1,6 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using RS3Bot.Cli.Options;
+using RS3Bot.Cli.Commands.Options;
 using RS3Bot.DAL;
 using RS3BotWeb.Shared;
 using RS3Bot.Abstractions.Interfaces;

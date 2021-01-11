@@ -1,7 +1,7 @@
 ﻿using CommandLine;
 using RS3Bot.Abstractions.Interfaces;
 
-namespace RS3Bot.Cli.Options
+namespace RS3Bot.Cli.Commands.Options
 {
     [Verb("buy", HelpText = "Buy items from shop")]
     public class ShopBuyOption : IOptionsBase
